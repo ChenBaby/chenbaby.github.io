@@ -8,12 +8,12 @@
   
   
   
-  <title>关于 | ChenBaby&#39;s Blog</title>
+  <title>Hexo 搭建博客 | ChenBaby&#39;s Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Hexo, theme-bmw">
+    <meta name="keywords" content="Hexo,">
   
 
   <script>
@@ -168,12 +168,12 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>about</span>
+    <span>Hexo 搭建博客</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2018-12-07
+      2018-06-07
     </span>
     <span>
       分类 : 
@@ -181,7 +181,7 @@
     </span>
     
       <span>
-        浏览 : <span class="article-timer" data-identity="about"></span>
+        浏览 : <span class="article-timer" data-identity="2018-06-07-Hexo"></span>
       </span>
     
   </div>
@@ -190,7 +190,32 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      
+      <h2 id="简单命令"><a href="#简单命令" class="headerlink" title="简单命令"></a>简单命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo clean #清除缓存</span><br><span class="line">hexo g == hexo generate#生成静态页面到public目录</span><br><span class="line">hexo s == hexo server #启动服务预览</span><br><span class="line">hexo d == hexo deploy#部署</span><br><span class="line">hexo new &quot;postName&quot; #新建文章</span><br><span class="line">hexo new page &quot;pageName&quot; #新建页面</span><br></pre></td></tr></table></figure>
+<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p><code>npm install -g hexo-cli</code></p>
+<h3 id="初始化hexo"><a href="#初始化hexo" class="headerlink" title="初始化hexo"></a>初始化hexo</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo init blog</span><br><span class="line">hexo install   # 安装依赖包</span><br></pre></td></tr></table></figure>
+<h2 id="本地预览"><a href="#本地预览" class="headerlink" title="本地预览"></a>本地预览</h2><p><code>hexo s   # 等同于hexo server，在本地服务器运行</code><br>打开浏览器地址栏输入：<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 便可以预览生成的博客框架雏形了。</p>
+<h2 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h2><p>默认是以post作为模板<br><code>hexo new &quot;文章名字&quot;</code><br>该命令会自动新建一个文件“文章名.md”</p>
+<p>或者直接在根目录的source文件夹的_posts文件夹下直接新建一个md文件</p>
+<p>下面是一个标准的文章格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章标题</span><br><span class="line">date: 文章创建日期</span><br><span class="line">categories: 文章分类</span><br><span class="line">tags:</span><br><span class="line">  - 文章标签1</span><br><span class="line">  - 文章标签2</span><br><span class="line">  - ...</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">在&lt;!-- more --&gt;之前编写文章的摘要内容！！！</span><br><span class="line"></span><br><span class="line">&lt;!-- more --&gt;</span><br><span class="line"></span><br><span class="line">在&lt;!-- more --&gt;之后编写文章的正式内容！！！</span><br></pre></td></tr></table></figure></p>
+<h2 id="生成页面"><a href="#生成页面" class="headerlink" title="生成页面"></a>生成页面</h2><p><code>hexo new page XXX  //以page 作为模版,会自动生成里面的index.md</code></p>
+<h3 id="生成标签页面："><a href="#生成标签页面：" class="headerlink" title="生成标签页面："></a>生成标签页面：</h3><pre><code>hexo new page tags
+</code></pre><p>修改标签归档页面的markdown文件(文件路径：your-blog/source/tags/index.md)的内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: &lt;!-- 自动生成，无需修改 --&gt;</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">categories:</span><br><span class="line">tags:</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
+<p>注：type字段的值是<code>tags</code></p>
+<h3 id="生成分类页面："><a href="#生成分类页面：" class="headerlink" title="生成分类页面："></a>生成分类页面：</h3><pre><code>hexo new page categories
+</code></pre><p>修改分类归档页面的markdown文件(文件路径：your-blog/source/categories/index.md)的内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: &lt;!-- 自动生成，无需修改 --&gt;</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">categories:</span><br><span class="line">tags:</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
+<p>注：type字段的值是<code>categories</code></p>
+<h2 id="部署到服务器"><a href="#部署到服务器" class="headerlink" title="部署到服务器"></a>部署到服务器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+<p>这里主要介绍部署到Github上面</p>
+<p>在github上面先建立仓库，仓库名格式必须为{user_name}.github.io，其中{user_name}必须与你的用户名一样。</p>
+<p>至于我们如何让本地git项目与远程的github建立联系呢？见<a href="https://godbmw.com/passages/2018-09-06-git-tag-and-version/" target="_blank" rel="noopener">Github仓库部署</a><br>完成上面的建立，接下来安装一个部署扩展<br><code>npm install hexo-deployer-git --save</code></p>
+<h3 id="配置-Deployment"><a href="#配置-Deployment" class="headerlink" title="配置 Deployment"></a>配置 Deployment</h3><p>在项目根目录下找到_config.yml文件，找到Deployment<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:ChenBaby/chenbaby.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<h2 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h2><h3 id="下载主题代码"><a href="#下载主题代码" class="headerlink" title="下载主题代码"></a>下载主题代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd your-blog/</span><br><span class="line">git clone git@github.com:dongyuanxin/theme-bmw.git themes/bmw</span><br></pre></td></tr></table></figure>
+<p>把自己想要替换的主题的git文件包放到themes目录下</p>
+<h3 id="修改HEXO配置文件"><a href="#修改HEXO配置文件" class="headerlink" title="修改HEXO配置文件"></a>修改HEXO配置文件</h3><p>修改hexo的配置文件：<code>your-blog/_config.yml:</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"># Site</span><br><span class="line">title: 您自己的网站标题</span><br><span class="line">subtitle: # 不需要填写</span><br><span class="line">description: 您自己的网站描述</span><br><span class="line">keywords: 您自己的网站关键词</span><br><span class="line">author: 您的姓名</span><br><span class="line">language: zh-Hans</span><br><span class="line">timezone: # 不需要填写</span><br><span class="line">...</span><br><span class="line">theme: bmw</span><br></pre></td></tr></table></figure></p>
+<h3 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h3><p>theme-bmw 的配置文件：<code>your-blog/themes/bmw/_config.yml</code><br>可以根据自己需要去更改网站其他配置，例如自定义导航栏：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 导航栏头部名称</span><br><span class="line">nav_name: ChenBaby&apos;s Blog</span><br><span class="line"># 导航栏选项</span><br><span class="line"># blank: 是否在新页面打开，默认 false</span><br><span class="line"># children：开启二级导航栏</span><br><span class="line">nav: </span><br><span class="line">  - </span><br><span class="line">    name: 主页</span><br><span class="line">    path: /</span><br><span class="line">  -</span><br><span class="line">    name: 归档</span><br><span class="line">    path: /archives/</span><br><span class="line">  -</span><br><span class="line">    name: 分类</span><br><span class="line">    path: /categories/</span><br><span class="line">  -</span><br><span class="line">    name: 标签</span><br><span class="line">    path: /tags/</span><br><span class="line">  - </span><br><span class="line">    name: Github</span><br><span class="line">    path: &quot;https://github.com/ChenBaby&quot;</span><br></pre></td></tr></table></figure></p>
+<p>站点配置文件和主题配置文件名称都是一样的_config.yml，站点配置文件在网站根目录，主题配置文件在根目录下的theme文件的具体theme下的_config.yml。</p>
+<h3 id="使用markdown语法编好文章"><a href="#使用markdown语法编好文章" class="headerlink" title="使用markdown语法编好文章"></a>使用markdown语法编好文章</h3><p>依据markdown语法编好文章，以及部署本地文件到github后，那么就可以使用命令：<code>hexo d -g</code>同步到github</p>
+<p>然后使用<a href="https://chenbaby.github.io进行访问" target="_blank" rel="noopener">https://chenbaby.github.io进行访问</a></p>
     </div>
   </div>
   <!-- 
@@ -201,7 +226,7 @@
         
           本文作者 : GODBMW <br/>
         
-        原文链接 : <a href="">https://ChenBaby.github.io/about/index.html</a><br>
+        原文链接 : <a href="">https://ChenBaby.github.io/articles/2018-06-07-Hexo/</a><br>
         版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
         </blockquote>
       </div>
@@ -259,6 +284,14 @@
       <span>
         <i class="iconfont icon-06tags"></i>标签: 
         
+          
+          <span class="span--tag">
+            <a href="/tags/Hexo/">
+              #Hexo
+            </a>
+          </span>
+          
+        
       </span>
     </div>
     <div class="article-meta pull-right">
@@ -276,6 +309,12 @@
 
   <nav class="post-navigation">
     
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/articles/2018-12-07-Vue组件间通信/" target="_self">Vue组件间通信</a>
+        <i class="iconfont icon-next"></i>
+      </div>
     
   </nav>
 
@@ -354,7 +393,7 @@ const valineAPI = (() => {
 })()
 
 const calcAndWriteTimes = () => {
-  let isPost = false;
+  let isPost = true;
 
   let timerAllDOM = document.querySelectorAll(".article-timer");
 
