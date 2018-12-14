@@ -78,4 +78,6 @@ theme: bmw
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: git@github.com:ChenBaby/chenbaby.github.io.git
+  branch: master
