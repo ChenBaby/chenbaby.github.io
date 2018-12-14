@@ -8,12 +8,12 @@
   
   
   
-  <title>Vue组件间通信 | ChenBaby&#39;s Blog</title>
+  <title>CSS自定义属性 | ChenBaby&#39;s Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Vue,">
+    <meta name="keywords" content="Css,">
   
 
   <script>
@@ -160,12 +160,12 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>Vue组件间通信</span>
+    <span>CSS自定义属性</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2018-12-07
+      2018-12-14
     </span>
     <!-- <span>
       分类 : 
@@ -173,7 +173,7 @@
     </span> -->
     
       <span>
-        浏览 : <span class="article-timer" data-identity="2018-12-07-Vue组件间通信"></span>
+        浏览 : <span class="article-timer" data-identity="2018-12-14-CSS自定义属性"></span>
       </span>
     
   </div>
@@ -182,17 +182,19 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <h2 id="事件总线（eventBus）"><a href="#事件总线（eventBus）" class="headerlink" title="事件总线（eventBus）"></a>事件总线（eventBus）</h2><p>全局bus、事件触发提交（$emit）、事件监听（$on）、监听移除（$off）</p>
-<p>注意：<br>第一是$bus.on应该在created钩子内使用，如果在mounted使用，它可能接收不到其他组件来自created钩子内发出的事件；</p>
-<p>第二点是使用了$bus.on，在beforeDestory钩子里应该需要使用$bus.off解除，因为组件销毁后，就没有必要把监听的句柄存储在vue-bus里面了</p>
-<h2 id="VUEX"><a href="#VUEX" class="headerlink" title="VUEX"></a>VUEX</h2><h2 id="Watch"><a href="#Watch" class="headerlink" title="Watch"></a>Watch</h2><h3 id="watch一个对象-用deep深度监听对象的属性变化"><a href="#watch一个对象-用deep深度监听对象的属性变化" class="headerlink" title="watch一个对象, 用deep深度监听对象的属性变化"></a>watch一个对象, 用deep深度监听对象的属性变化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">	user: &#123;</span><br><span class="line">		handle: function (newval, oldval) &#123;</span><br><span class="line">			console.log(newval, oldval)		</span><br><span class="line">&#125;,</span><br><span class="line">deep: true</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>监听器会一层层的往下遍历，给对象的所有属性都加上这个监听器，但是这样性能开销就会非常大了，任何修改obj里面任何一个属性都会触发这个监听器里的 handler。</p>
-<p>可以使用字符串形式监听对象里面的某一属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">  &apos;obj.a&apos;: &#123;</span><br><span class="line">    handler(newName, oldName) &#123;</span><br><span class="line">      console.log(&apos;obj.a changed&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="immediate代表在wacth里声明了firstName这个方法之后立即先去执行handler方法"><a href="#immediate代表在wacth里声明了firstName这个方法之后立即先去执行handler方法" class="headerlink" title="immediate代表在wacth里声明了firstName这个方法之后立即先去执行handler方法"></a>immediate代表在wacth里声明了firstName这个方法之后立即先去执行handler方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">  firstName(newName, oldName) &#123;</span><br><span class="line">    this.fullName = newName + &apos; &apos; + this.lastName;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里 watch 的一个特点是，最初绑定的时候是不会执行的，要等到 firstName 改变时才执行监听计算。那我们想要一开始就让他最初绑定的时候就执行改怎么办呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">  firstName: &#123;</span><br><span class="line">    handler(newName, oldName) &#123;</span><br><span class="line">      this.fullName = newName + &apos; &apos; + this.lastName;</span><br><span class="line">    &#125;,</span><br><span class="line">    immediate: true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>而immediate:true代表如果在 wacth 里声明了 firstName 之后，就会立即先去执行里面的handler方法，如果为 false就跟我们以前的效果一样，不会在绑定的时候就执行。</p>
-<h3 id="注销watch"><a href="#注销watch" class="headerlink" title="注销watch"></a>注销watch</h3><p>以上的watch写在组件的选项中，会随着组件的销毁而注销，但是以下形式注册的监听需要手动注销：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const unWatch = vm.$watch(&apos;text&apos;, (newVal, oldVal) =&gt; &#123;</span><br><span class="line">  console.log(`$&#123;newVal&#125; : $&#123;oldVal&#125;`);</span><br><span class="line">&#125;)</span><br><span class="line"> </span><br><span class="line">unWatch(); // 手动注销watch</span><br></pre></td></tr></table></figure></p>
-<p>vm.$watch 返回一个取消观察函数，用来停止触发回调：就是unWatch方法，你要注销 watch 只要调用unWatch方法就可以了。</p>
+      <h3 id="Css-Custom-Properties（Css变量）"><a href="#Css-Custom-Properties（Css变量）" class="headerlink" title="Css Custom Properties（Css变量）"></a>Css Custom Properties（Css变量）</h3><p>定义：<br><code>--custom-property: value</code><br>在自定义属性前添加双横线前缀，然后像给普通CSS设值一样，给自定义属性设值。</p>
+<blockquote>
+<p><strong>CSS自定义属性是区分大小写的</strong></p>
+</blockquote>
+<p>使用：<br><code>var(--custom-property, 默认值)</code></p>
+<blockquote>
+<p>如果是语法错误，将会直接视为无效，但无效的var()将会被该属性的初始值或继承值替代</p>
+</blockquote>
+<p>可根据浏览器是否支持判断使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@support(--css: variables) &#123;</span><br><span class="line">    :root &#123;</span><br><span class="line">        xxx: var(--custom-property)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//:root选择器可以选择到DOM元素中或document树中最高顶级的元素。</span><br><span class="line">//因此，在:root选择器是声明的CSS自定义属性，其作用域的范围是全局范围，也就是全局作用域。</span><br></pre></td></tr></table></figure></p>
+<p>可以在@media或其他条件规则中更改CSS自定义属性的值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">:root &#123;</span><br><span class="line">    --gutter: 10px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@media screen and (min-width: 768px) &#123;</span><br><span class="line">    --gutter: 30px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以选择在内联样式中声明CSS自定义属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--HTML--&gt;</span><br><span class="line">&lt;html style=&quot;--color: red&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--CSS--&gt;</span><br><span class="line">body &#123;</span><br><span class="line">    color: var(--color)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>优点：<br>可读性和可维护性、易于修改多处引用</p>
+
     </div>
   </div>
   <!-- 
@@ -203,7 +205,7 @@
         
           本文作者 : GODBMW <br/>
         
-        原文链接 : <a href="">https://ChenBaby.github.io/articles/2018-12-07-Vue组件间通信/</a><br>
+        原文链接 : <a href="">https://ChenBaby.github.io/articles/2018-12-14-CSS自定义属性/</a><br>
         版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
         </blockquote>
       </div>
@@ -263,8 +265,8 @@
         
           
           <span class="span--tag">
-            <a href="/tags/Vue/">
-              #Vue
+            <a href="/tags/Css/">
+              #Css
             </a>
           </span>
           
@@ -289,15 +291,9 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/articles/2018-06-07-Hexo/" target="_self">Hexo 搭建博客</a>
+        <a href="/articles/2018-12-14-gulp插件/" target="_self">gulp插件</a>
       </div>
     
-    
-      <div class="nav-next">
-        下一篇:
-        <a href="/articles/2018-12-09-git/" target="_self">git</a>
-        <i class="iconfont icon-next"></i>
-      </div>
     
   </nav>
 
