@@ -8,12 +8,12 @@
   
   
   
-  <title>nodejs下request模块中文gb2312乱码问题 | ChenBaby&#39;s Blog</title>
+  <title>Git | ChenBaby&#39;s Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="NodeJS,">
+    <meta name="keywords" content="Git,">
   
 
   <script>
@@ -160,12 +160,12 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>nodejs下request模块中文gb2312乱码问题</span>
+    <span>Git</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2018-12-26
+      2018-12-09
     </span>
     <!-- <span>
       分类 : 
@@ -173,7 +173,7 @@
     </span> -->
     
       <span>
-        浏览 : <span class="article-timer" data-identity="2018-12-26-nodejs下request模块中文gb2312乱码问题"></span>
+        浏览 : <span class="article-timer" data-identity="2018-12-09-Git"></span>
       </span>
     
   </div>
@@ -182,9 +182,10 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <br>使用nodejs的request包请求中文gb2312网页时会乱码，默认：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var request = require(&apos;request&apos;);</span><br><span class="line">request(url, function(error, response, body) &#123;</span><br><span class="line">    if (!error &amp;&amp; response.statusCode == 200) &#123;</span><br><span class="line">        console.log(body);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p></p>
-<p>Node.js内置模块是没有转码工具的，这个时候我们就要用第三方中间件iconv-lite来进行转码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var request = require(&apos;request&apos;);</span><br><span class="line">var Iconv = require(&apos;iconv-lite&apos;);</span><br><span class="line">request(&#123;</span><br><span class="line">    encoding: null,</span><br><span class="line">    url: url</span><br><span class="line">&#125;, function(error, response, body) &#123;</span><br><span class="line">    if (!error &amp;&amp; response.statusCode == 200) &#123;</span><br><span class="line">        console.log(Iconv.decode(body, &apos;gb2312&apos;).toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>电影爬虫小程序：<br><a href="https://github.com/ChenBaby/worm" target="_blank" rel="noopener">https://github.com/ChenBaby/worm</a></p>
+      <h3 id="关联远程分支"><a href="#关联远程分支" class="headerlink" title="关联远程分支"></a>关联远程分支</h3><p>使用git在本地新建一个分支后，需要做远程分支关联。</p>
+<p>关联目的是在执行git pull, git push操作时就不需要指定对应的远程分支</p>
+<p>如果没有关联，操作一些git命令时，会提示添加关联。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">There is no tracking information for the current branch.</span><br><span class="line">Please specify which branch you want to merge with.</span><br><span class="line">See git-pull(1) for details.</span><br><span class="line"></span><br><span class="line">    git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"></span><br><span class="line">If you wish to set tracking information for this branch you can do so with:</span><br><span class="line"></span><br><span class="line">    git branch --set-upstream-to=origin/&lt;branch&gt; dev</span><br></pre></td></tr></table></figure></p>
+<p>远程分支关联<br><code>git branch --set-upstream-to=origin/remote_branch your_branch</code><br>其中，origin/remote_branch是你本地分支对应的远程分支；your_branch是你当前的本地分支。</p>
     </div>
   </div>
   <!-- 
@@ -195,7 +196,7 @@
         
           本文作者 : GODBMW <br/>
         
-        原文链接 : <a href="">https://ChenBaby.github.io/articles/2018-12-26-nodejs下request模块中文gb2312乱码问题/</a><br>
+        原文链接 : <a href="">https://ChenBaby.github.io/articles/2018-12-09-Git/</a><br>
         版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
         </blockquote>
       </div>
@@ -255,8 +256,8 @@
         
           
           <span class="span--tag">
-            <a href="/tags/NodeJS/">
-              #NodeJS
+            <a href="/tags/Git/">
+              #Git
             </a>
           </span>
           
@@ -281,13 +282,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/articles/2018-12-26-Git/" target="_self">Git</a>
+        <a href="/articles/2018-12-07-Vue组件间通信/" target="_self">Vue组件间通信</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/articles/2018-12-26-console/" target="_self">console</a>
+        <a href="/articles/2018-12-10-nodejs下request模块中文gb2312乱码问题/" target="_self">nodejs下request模块中文gb2312乱码问题</a>
         <i class="iconfont icon-next"></i>
       </div>
     
