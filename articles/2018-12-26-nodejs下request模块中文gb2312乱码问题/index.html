@@ -8,12 +8,12 @@
   
   
   
-  <title>Vue | ChenBaby&#39;s Blog</title>
+  <title>nodejs下request模块中文gb2312乱码问题 | ChenBaby&#39;s Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Hexo, theme-bmw">
+    <meta name="keywords" content="NodeJS,">
   
 
   <script>
@@ -160,12 +160,12 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>Vue</span>
+    <span>nodejs下request模块中文gb2312乱码问题</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2018-12-07
+      2018-12-26
     </span>
     <!-- <span>
       分类 : 
@@ -173,7 +173,7 @@
     </span> -->
     
       <span>
-        浏览 : <span class="article-timer" data-identity="tags"></span>
+        浏览 : <span class="article-timer" data-identity="2018-12-26-nodejs下request模块中文gb2312乱码问题"></span>
       </span>
     
   </div>
@@ -182,7 +182,9 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      
+      <br>使用nodejs的request包请求中文gb2312网页时会乱码，默认：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var request = require(&apos;request&apos;);</span><br><span class="line">request(url, function(error, response, body) &#123;</span><br><span class="line">    if (!error &amp;&amp; response.statusCode == 200) &#123;</span><br><span class="line">        console.log(body);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p></p>
+<p>Node.js内置模块是没有转码工具的，这个时候我们就要用第三方中间件iconv-lite来进行转码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var request = require(&apos;request&apos;);</span><br><span class="line">var Iconv = require(&apos;iconv-lite&apos;);</span><br><span class="line">request(&#123;</span><br><span class="line">    encoding: null,</span><br><span class="line">    url: url</span><br><span class="line">&#125;, function(error, response, body) &#123;</span><br><span class="line">    if (!error &amp;&amp; response.statusCode == 200) &#123;</span><br><span class="line">        console.log(Iconv.decode(body, &apos;gb2312&apos;).toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>电影爬虫小程序：<br><a href="https://github.com/ChenBaby/worm" target="_blank" rel="noopener">https://github.com/ChenBaby/worm</a></p>
     </div>
   </div>
   <!-- 
@@ -193,7 +195,7 @@
         
           本文作者 : GODBMW <br/>
         
-        原文链接 : <a href="">https://ChenBaby.github.io/tags/index.html</a><br>
+        原文链接 : <a href="">https://ChenBaby.github.io/articles/2018-12-26-nodejs下request模块中文gb2312乱码问题/</a><br>
         版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
         </blockquote>
       </div>
@@ -251,6 +253,14 @@
       <span>
         <i class="iconfont icon-06tags"></i>标签: 
         
+          
+          <span class="span--tag">
+            <a href="/tags/NodeJS/">
+              #NodeJS
+            </a>
+          </span>
+          
+        
       </span>
     </div>
     <div class="article-meta pull-right">
@@ -268,6 +278,18 @@
 
   <nav class="post-navigation">
     
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/articles/2018-12-26-Git/" target="_self">Git</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/articles/2018-12-26-console/" target="_self">console</a>
+        <i class="iconfont icon-next"></i>
+      </div>
     
   </nav>
 
@@ -346,7 +368,7 @@ const valineAPI = (() => {
 })()
 
 const calcAndWriteTimes = () => {
-  let isPost = false;
+  let isPost = true;
 
   let timerAllDOM = document.querySelectorAll(".article-timer");
 
