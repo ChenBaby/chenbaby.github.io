@@ -78,8 +78,7 @@ header {
       display: inline-block;
       color: #000;
       font-weight: 333;
-      font-family: "Sakura";
-      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); }
+      font-family: "Sakura";}
 
 .site-navigation {
   text-align: center;
