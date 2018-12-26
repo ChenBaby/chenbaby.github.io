@@ -3,6 +3,9 @@ title: npm发布包
 date: 2018-12-16 14:03:41
 tags: npm
 ---
+npm发布一个包，可供npm全局下载
+npm i chenbaby-translate -g
+<!-- more -->
 ### 功能文件
 translate.js，放在bin目录下
 ```

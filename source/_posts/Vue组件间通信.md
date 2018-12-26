@@ -1,6 +1,6 @@
 ---
 title: Vue组件间通信
-date: 2018-12-07 12:37:40
+date: 2018-12-18 12:37:40
 tags: Vue
 ---
 Vue可以通过eventBus以及Vuex来实现兄弟组件间通信
