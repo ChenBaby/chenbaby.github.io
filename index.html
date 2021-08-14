@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="董沅鑫, yuanxin.me@gmail.com" />
+  
+  
+  
+  <title>前端笔记-ChenBaby</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Hexo, theme-bmw" />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">前端笔记</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="https://github.com/ChenBaby">
+          
+            <a 
+              href="https://github.com/ChenBaby"
+              target="_self"
+            >
+              Github
+            </a>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+<div class="container home-index">
+  <h1 align="center">
+    <a href="javascript:void(0)">
+      <span>【置顶】博客的更新</span>
+    </a>
+  </h1>
+  <div class="article-content">
+    <p>✨ 欢迎关注 ✨</p>
+    <p>由于个人有记笔记的习惯，所以在前端开发工作中积累到的技术知识点等都记在《印象笔记》上</p>
+    <p>本博客内容的更新将持续进行，我会把自己总结的内容从我的印象笔记中转移到这个博客。。。</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="article-title">
+      <a href="/articles/2021-08-11-vue3.0%E7%9A%84%E8%AE%A4%E8%AF%86/">
+        <span>vue 3.0的认识</span>
+      </a>
+    </h1>
+    <!-- PC端文章信息 -->
+    <div class="article-top-meta pc-view">
+      <span>
+        发布时间 : 2021-08-11
+      </span>
+    </div>
+    <!-- 移动端文章信息 -->
+    <div class="article-top-meta mobile-view">
+      <span>
+        发布 : 2021-08-11
+      </span>
+      
+      
+    </div>
+    
+    <!-- 文章简介 -->
+    <div class="article-content">
+      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
+        <p>vue 3.0的基本函数的一些理解</p>
+      </div>
+    </div>
+    <div class="article-footer">
+      <div class="article-meta pull-left">
+        <!-- 分类pc端可见 -->
+        <span class="pc-view">
+          
+        <span>
+          
+            <i class="iconfont icon-06tags"></i>标签:
+            
+              <span class="span--tag">
+                <a href="/tags/Vue/">
+                  #Vue
+                </a>
+              </span>
+            
+                    
+        </span>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h1 class="article-title">
+      <a href="/articles/2018-12-26-Vue%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1/">
+        <span>Vue动态路由</span>
+      </a>
+    </h1>
+    <!-- PC端文章信息 -->
+    <div class="article-top-meta pc-view">
+      <span>
+        发布时间 : 2018-12-26
+      </span>
+    </div>
+    <!-- 移动端文章信息 -->
+    <div class="article-top-meta mobile-view">
+      <span>
+        发布 : 2018-12-26
+      </span>
+      
+      
+    </div>
+    
+    <!-- 文章简介 -->
+    <div class="article-content">
+      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
+        <p>router.addRoutes (routes) 动态添加更多的路由规则。参数必须是一个符合 routes 选项要求的数组。</p>
+      </div>
+    </div>
+    <div class="article-footer">
+      <div class="article-meta pull-left">
+        <!-- 分类pc端可见 -->
+        <span class="pc-view">
+          
+        <span>
+          
+            <i class="iconfont icon-06tags"></i>标签:
+            
+              <span class="span--tag">
+                <a href="/tags/Vue/">
+                  #Vue
+                </a>
+              </span>
+            
+                    
+        </span>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h1 class="article-title">
+      <a href="/articles/2018-12-18-Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E4%BF%A1/">
+        <span>Vue组件间通信</span>
+      </a>
+    </h1>
+    <!-- PC端文章信息 -->
+    <div class="article-top-meta pc-view">
+      <span>
+        发布时间 : 2018-12-18
+      </span>
+    </div>
+    <!-- 移动端文章信息 -->
+    <div class="article-top-meta mobile-view">
+      <span>
+        发布 : 2018-12-18
+      </span>
+      
+      
+    </div>
+    
+    <!-- 文章简介 -->
+    <div class="article-content">
+      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
+        <p>Vue 可以通过 eventBus 以及 Vuex 来实现兄弟组件间通信</p>
+      </div>
+    </div>
+    <div class="article-footer">
+      <div class="article-meta pull-left">
+        <!-- 分类pc端可见 -->
+        <span class="pc-view">
+          
+        <span>
+          
+            <i class="iconfont icon-06tags"></i>标签:
+            
+              <span class="span--tag">
+                <a href="/tags/Vue/">
+                  #Vue
+                </a>
+              </span>
+            
+                    
+        </span>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h1 class="article-title">
+      <a href="/articles/2018-12-16-npm%E5%8F%91%E5%B8%83%E5%8C%85/">
+        <span>npm发布包</span>
+      </a>
+    </h1>
+    <!-- PC端文章信息 -->
+    <div class="article-top-meta pc-view">
+      <span>
+        发布时间 : 2018-12-16
+      </span>
+    </div>
+    <!-- 移动端文章信息 -->
+    <div class="article-top-meta mobile-view">
+      <span>
+        发布 : 2018-12-16
+      </span>
+      
+      
+    </div>
+    
+    <!-- 文章简介 -->
+    <div class="article-content">
+      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
+        <p>npm 发布一个包，可供 npm 全局下载<br>
+ npm i chenbaby-translate -g</p>
+      </div>
+    </div>
+    <div class="article-footer">
+      <div class="article-meta pull-left">
+        <!-- 分类pc端可见 -->
+        <span class="pc-view">
+          
+        <span>
+          
+            <i class="iconfont icon-06tags"></i>标签:
+            
+              <span class="span--tag">
+                <a href="/tags/npm/">
+                  #npm
+                </a>
+              </span>
+            
+                    
+        </span>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h1 class="article-title">
+      <a href="/articles/2018-12-14-CSS%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/">
+        <span>CSS自定义属性</span>
+      </a>
+    </h1>
+    <!-- PC端文章信息 -->
+    <div class="article-top-meta pc-view">
+      <span>
+        发布时间 : 2018-12-14
+      </span>
+    </div>
+    <!-- 移动端文章信息 -->
+    <div class="article-top-meta mobile-view">
+      <span>
+        发布 : 2018-12-14
+      </span>
+      
+      
+    </div>
+    
+    <!-- 文章简介 -->
+    <div class="article-content">
+      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
+        <p><code>--custom-property: value</code> <br>
+ 在自定义属性前添加双横线前缀，然后像给普通 CSS 设值一样，给自定义属性设值。</p>
+      </div>
+    </div>
+    <div class="article-footer">
+      <div class="article-meta pull-left">
+        <!-- 分类pc端可见 -->
+        <span class="pc-view">
+          
+        <span>
+          
+            <i class="iconfont icon-06tags"></i>标签:
+            
+              <span class="span--tag">
+                <a href="/tags/Css/">
+                  #Css
+                </a>
+              </span>
+            
+                    
+        </span>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h1 class="article-title">
+      <a href="/articles/2018-12-14-gulp%E6%8F%92%E4%BB%B6/">
+        <span>gulp插件</span>
+      </a>
+    </h1>
+    <!-- PC端文章信息 -->
+    <div class="article-top-meta pc-view">
+      <span>
+        发布时间 : 2018-12-14
+      </span>
+    </div>
+    <!-- 移动端文章信息 -->
+    <div class="article-top-meta mobile-view">
+      <span>
+        发布 : 2018-12-14
+      </span>
+      
+      
+    </div>
+    
+    <!-- 文章简介 -->
+    <div class="article-content">
+      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
+        <p>使用 gulp 插件可以实现一些文件资源的压缩合并以及编译低版本浏览器能识别的格式，还可以实现自动刷新</p>
+      </div>
+    </div>
+    <div class="article-footer">
+      <div class="article-meta pull-left">
+        <!-- 分类pc端可见 -->
+        <span class="pc-view">
+          
+        <span>
+          
+            <i class="iconfont icon-06tags"></i>标签:
+            
+              <span class="span--tag">
+                <a href="/tags/Gulp/">
+                  #Gulp
+                </a>
+              </span>
+            
+                    
+        </span>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h1 class="article-title">
+      <a href="/articles/2018-12-14-Gulp%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8API/">
+        <span>Gulp一些常用API</span>
+      </a>
+    </h1>
+    <!-- PC端文章信息 -->
+    <div class="article-top-meta pc-view">
+      <span>
+        发布时间 : 2018-12-14
+      </span>
+    </div>
+    <!-- 移动端文章信息 -->
+    <div class="article-top-meta mobile-view">
+      <span>
+        发布 : 2018-12-14
+      </span>
+      
+      
+    </div>
+    
+    <!-- 文章简介 -->
+    <div class="article-content">
+      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
+        <p>Gulp 前端自动化构建工具，常用于：<br>
+css/less 编译<br>
+ html/css/js/ 图片等资源的压缩与合并<br>
+ babel 转译等等</p>
+      </div>
+    </div>
+    <div class="article-footer">
+      <div class="article-meta pull-left">
+        <!-- 分类pc端可见 -->
+        <span class="pc-view">
+          
+        <span>
+          
+            <i class="iconfont icon-06tags"></i>标签:
+            
+              <span class="span--tag">
+                <a href="/tags/Gulp/">
+                  #Gulp
+                </a>
+              </span>
+            
+                    
+        </span>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h1 class="article-title">
+      <a href="/articles/2018-12-13-fs%E6%A8%A1%E5%9D%97/">
+        <span>fs模块</span>
+      </a>
+    </h1>
+    <!-- PC端文章信息 -->
+    <div class="article-top-meta pc-view">
+      <span>
+        发布时间 : 2018-12-13
+      </span>
+    </div>
+    <!-- 移动端文章信息 -->
+    <div class="article-top-meta mobile-view">
+      <span>
+        发布 : 2018-12-13
+      </span>
+      
+      
+    </div>
+    
+    <!-- 文章简介 -->
+    <div class="article-content">
+      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
+        <p>发布一个 npm 包，并可以全局安装<br>
+ npm i chenbaby-translate -g</p>
+      </div>
+    </div>
+    <div class="article-footer">
+      <div class="article-meta pull-left">
+        <!-- 分类pc端可见 -->
+        <span class="pc-view">
+          
+        <span>
+          
+            <i class="iconfont icon-06tags"></i>标签:
+            
+              <span class="span--tag">
+                <a href="/tags/NodeJS/">
+                  #NodeJS
+                </a>
+              </span>
+            
+              <span class="span--tag">
+                <a href="/tags/fs/">
+                  #fs
+                </a>
+              </span>
+            
+                    
+        </span>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h1 class="article-title">
+      <a href="/articles/2018-12-11-console/">
+        <span>console</span>
+      </a>
+    </h1>
+    <!-- PC端文章信息 -->
+    <div class="article-top-meta pc-view">
+      <span>
+        发布时间 : 2018-12-11
+      </span>
+    </div>
+    <!-- 移动端文章信息 -->
+    <div class="article-top-meta mobile-view">
+      <span>
+        发布 : 2018-12-11
+      </span>
+      
+      
+    </div>
+    
+    <!-- 文章简介 -->
+    <div class="article-content">
+      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
+        <p>console 命令， 让 js 调试更简单</p>
+      </div>
+    </div>
+    <div class="article-footer">
+      <div class="article-meta pull-left">
+        <!-- 分类pc端可见 -->
+        <span class="pc-view">
+          
+        <span>
+          
+            <i class="iconfont icon-06tags"></i>标签:
+            
+              <span class="span--tag">
+                <a href="/tags/javascript/">
+                  #javascript
+                </a>
+              </span>
+            
+                    
+        </span>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="post">
+    <h1 class="article-title">
+      <a href="/articles/2018-12-10-nodejs%E4%B8%8Brequest%E6%A8%A1%E5%9D%97%E4%B8%AD%E6%96%87gb2312%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/">
+        <span>nodejs下request模块中文gb2312乱码问题</span>
+      </a>
+    </h1>
+    <!-- PC端文章信息 -->
+    <div class="article-top-meta pc-view">
+      <span>
+        发布时间 : 2018-12-10
+      </span>
+    </div>
+    <!-- 移动端文章信息 -->
+    <div class="article-top-meta mobile-view">
+      <span>
+        发布 : 2018-12-10
+      </span>
+      
+      
+    </div>
+    
+    <!-- 文章简介 -->
+    <div class="article-content">
+      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
+        <p>在用 node 写一个爬虫程序时，对格式为 GB2312 的网页进行转码<br>
+使用 iconv-lite 解决 node 当中不支持 GBK 编码的问题</p>
+      </div>
+    </div>
+    <div class="article-footer">
+      <div class="article-meta pull-left">
+        <!-- 分类pc端可见 -->
+        <span class="pc-view">
+          
+        <span>
+          
+            <i class="iconfont icon-06tags"></i>标签:
+            
+              <span class="span--tag">
+                <a href="/tags/NodeJS/">
+                  #NodeJS
+                </a>
+              </span>
+            
+                    
+        </span>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  <nav class="page-navigation">
+    
+    
+      <a href="/page/2/">下一页</a>
+    
+  </nav>
+
+   
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a target="_blank" rel="noopener" href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+      <a href="https://github.com/ChenBaby" target="_blank">关注我</a>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2018, 5, 7).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

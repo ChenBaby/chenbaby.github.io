@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="董沅鑫, yuanxin.me@gmail.com" />
+  
+  
+  
+  <title>vue 3.0的认识 | 前端笔记-ChenBaby</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Vue," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">前端笔记</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="https://github.com/ChenBaby">
+          
+            <a 
+              href="https://github.com/ChenBaby"
+              target="_self"
+            >
+              Github
+            </a>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>vue 3.0的认识</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-08-11
+    </span>
+    
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h3 id="setup-函数"><a href="#setup-函数" class="headerlink" title="setup 函数"></a>setup 函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 标准组件格式 --&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">import</span> &#123; defineComponent &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="comment">// 需要先导入组件</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">import</span> Header <span class="keyword">from</span> <span class="string">&#x27;@cp/Header.vue&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">export</span> <span class="keyword">default</span> defineComponent(&#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="comment">// 需要通过 components 才能启用子组件</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">components</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        Header,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="function"><span class="title">setup</span>(<span class="params">props, context</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="comment">// context 用来定义上下文, 上下文对象中包含了一些有用的属性 attrs、slots、等属性 在vue 2.x通过this 访问</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        context.attrs</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        contexts.slots</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        context.emit</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        ....</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">const</span> name = ref&lt;string&gt;(<span class="string">&#x27;Petter&#x27;</span>)</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">const</span> changeName = (): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">            name.value = <span class="string">&#x27;Tom&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">            <span class="comment">/* 需要在template调用到的变量 */</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;)</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br></pre></td></tr></table></figure>
+<h4 id="script-setup-模式"><a href="#script-setup-模式" class="headerlink" title="script-setup 模式"></a>script-setup 模式</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 使用 script-setup 格式 --&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="keyword">import</span> Header <span class="keyword">from</span> <span class="string">&#x27;@cp/Header.vue&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="keyword">const</span> props = defineProps(&#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="attr">name</span>: <span class="built_in">String</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="attr">userInfo</span>: <span class="built_in">Object</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="attr">tags</span>: <span class="built_in">Array</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;)</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="keyword">const</span> emit = defineEmits([<span class="string">&#x27;chang-name&#x27;</span>])</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    onMounted(<span class="function">()  =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="built_in">console</span>.log(props.msg)</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;)</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="defineProps"><a href="#defineProps" class="headerlink" title="defineProps"></a>defineProps</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// script-setup模式  </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 单纯在 template 里使用</span></span><br><span class="line">defineProps([<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;userInfo&#x27;</span>, <span class="string">&#x27;tags&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">// script 里的方法要拿到 props 的值，要使用字面量定义</span></span><br><span class="line"><span class="keyword">const</span> props = defineProps(&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="built_in">String</span>,</span><br><span class="line">    <span class="attr">userInfo</span>: <span class="built_in">Object</span>,</span><br><span class="line">    <span class="attr">tags</span>: <span class="built_in">Array</span>,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用props</span></span><br><span class="line">props.name</span><br></pre></td></tr></table></figure>
+<h4 id="defineEmit"><a href="#defineEmit" class="headerlink" title="defineEmit"></a>defineEmit</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取 emit</span></span><br><span class="line"><span class="keyword">const</span> emit = defineEmit([<span class="string">&#x27;chang-name&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用 emit</span></span><br><span class="line">emit(<span class="string">&#x27;chang-name&#x27;</span>, <span class="string">&#x27;Tom&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="reactive"><a href="#reactive" class="headerlink" title="reactive"></a>reactive</h3><p>reactive() 函数接收一个json对象，返回一个响应式的数据对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &#123;&#123;state.name&#125;&#125; <span class="comment">// test</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">import</span> &#123; defineComponent, reactive, ref, toRefs &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">export</span> <span class="keyword">default</span> defineComponent(&#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="function"><span class="title">setup</span>(<span class="params">props, context</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    </span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">let</span> state = reactive(&#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">            <span class="attr">name</span>: <span class="string">&#x27;test&#x27;</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;);</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        </span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">            state</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">&#125;);</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h3><p>ref 是对基本类型的数据做响应式，ref() 函数调用的返回值是一个对象，访问函数值需要加 .value</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;mine&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        &#123;&#123;count&#125;&#125; // 10</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">import</span> &#123; defineComponent, ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">export</span> <span class="keyword">default</span> defineComponent(&#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">const</span> count = ref&lt;number&gt;(<span class="number">10</span>)</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="comment">// 在js 中获取ref 中定义的值, 需要通过value属性</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="built_in">console</span>.log(count.value);</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">            count</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">&#125;);</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="toRefs"><a href="#toRefs" class="headerlink" title="toRefs"></a>toRefs</h3><h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><p>监听用reactive声明的数据源</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;script lang=<span class="string">&quot;ts&quot;</span>&gt;</span><br><span class="line"><span class="keyword">import</span> &#123; computed, defineComponent, reactive, toRefs, watch &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line">interface Person &#123;</span><br><span class="line">    <span class="attr">name</span>: string,</span><br><span class="line">    <span class="attr">age</span>: number</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineComponent(&#123;</span><br><span class="line">    <span class="function"><span class="title">setup</span>(<span class="params">props, context</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> state = reactive&lt;Person&gt;(&#123; <span class="attr">name</span>: <span class="string">&#x27;vue&#x27;</span>, <span class="attr">age</span>: <span class="number">10</span> &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 函数返回输出</span></span><br><span class="line">        watch(<span class="function">() =&gt;</span> state.age, <span class="function">(<span class="params">age, preAge</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(age);</span><br><span class="line">                <span class="built_in">console</span>.log(preAge);</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对数组使用 push/pop 时不能更新触发，必须得跟 React 那样 arr1 = [...arr1, item] 才行</span></span><br><span class="line">        <span class="comment">// 数组使用 push/pop doesn&#x27;t work</span></span><br><span class="line">        watch(<span class="function">()=&gt;</span> state.array <span class="comment">/* or ()=&gt; state.object  */</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;state&#x27;</span>, state.count)</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;ref&#x27;</span>, inputRef.value)</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;array&#x27;</span>, state.array)</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;object&#x27;</span>, state.object)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        state.age = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...toRefs(state)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>监听用ref声明的数据源</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;script lang=<span class="string">&quot;ts&quot;</span>&gt;</span><br><span class="line"><span class="keyword">import</span> &#123; defineComponent, ref, watch &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineComponent(&#123;</span><br><span class="line">  <span class="function"><span class="title">setup</span>(<span class="params">props, context</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> age = ref&lt;number&gt;(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 直接写ref引用的数据</span></span><br><span class="line">    watch(age, <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(age.value)); <span class="comment">// 100</span></span><br><span class="line">    </span><br><span class="line">    age.value = <span class="number">100</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      age</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>同时监听多个值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;script lang=<span class="string">&quot;ts&quot;</span>&gt;</span><br><span class="line"><span class="keyword">import</span> &#123; computed, defineComponent, reactive, toRefs, watch &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line">interface Person &#123;</span><br><span class="line">  <span class="attr">name</span>: string,</span><br><span class="line">  <span class="attr">age</span>: number</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineComponent(&#123;</span><br><span class="line">  <span class="function"><span class="title">setup</span>(<span class="params">props, context</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> state = reactive&lt;Person&gt;(&#123; <span class="attr">name</span>: <span class="string">&#x27;vue&#x27;</span>, <span class="attr">age</span>: <span class="number">10</span> &#125;)</span><br><span class="line"></span><br><span class="line">    watch(</span><br><span class="line">      [<span class="function">() =&gt;</span> state.age, <span class="function">() =&gt;</span> state.name],</span><br><span class="line">      <span class="function">(<span class="params">[newName, newAge], [oldName, oldAge]</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(newName);</span><br><span class="line">        <span class="built_in">console</span>.log(newAge);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">console</span>.log(oldName);</span><br><span class="line">        <span class="built_in">console</span>.log(oldAge);</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">    <span class="comment">// 此时需要注意, 更改其中一个值, 都会执行watch的回调</span></span><br><span class="line">    state.age = <span class="number">100</span></span><br><span class="line">    state.name = <span class="string">&#x27;vue3&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      ...toRefs(state)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="获取refs-HTML元素"><a href="#获取refs-HTML元素" class="headerlink" title="获取refs HTML元素"></a>获取refs HTML元素</h3><p>vue 2.x 对模板内元素(<code>&lt;div ref=&quot;XXX&quot;&gt;&lt;/div&gt;</code>)的引用，通过<code>this.$refs.XXX</code><br>vue 3.x 获取dom 元素如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;!--第一步：还是跟往常一样，在 html 中写入 ref 的名称--&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;mine&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;elmRefs&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>1111<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">import</span> &#123; defineComponent, onMounted, ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">export</span> <span class="keyword">default</span> defineComponent(&#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="function"><span class="title">setup</span>(<span class="params">props, context</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="comment">// 获取真实dom</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="keyword">const</span> elmRefs = ref&lt;<span class="literal">null</span> | HTMLElement&gt;(<span class="literal">null</span>);</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    onMounted (<span class="function">() =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="built_in">console</span>.log(elmRefs.value); <span class="comment">// 得到一个 RefImpl 的对象, 通过 .value 访问到数据</span></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;)</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      elmRefs</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">&#125;);</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="全局配置-暂未如期得到结果"><a href="#全局配置-暂未如期得到结果" class="headerlink" title="全局配置(暂未如期得到结果)"></a>全局配置(暂未如期得到结果)</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> app = Vue.createApp(&#123;&#125;)</span><br><span class="line"></span><br><span class="line">app.config = &#123;...&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 代替 Vue 2.x Vue.prototype扩展</span></span><br><span class="line">app.config.globalProperties.$http = <span class="string">&#x27;xxxxxxxxs&#x27;</span></span><br></pre></td></tr></table></figure>
+    </div>
+  </div>
+  
+  
+  
+
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/Vue/">
+              #Vue
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/articles/2018-12-26-Vue%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1/" target="_self">Vue动态路由</a>
+      </div>
+    
+    
+  </nav>
+
+   
+
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a target="_blank" rel="noopener" href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+      <a href="https://github.com/ChenBaby" target="_blank">关注我</a>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2018, 5, 7).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

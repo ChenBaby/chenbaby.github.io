@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="董沅鑫, yuanxin.me@gmail.com" />
+  
+  
+  
+  <title>gulp插件 | 前端笔记-ChenBaby</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Gulp," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">前端笔记</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="https://github.com/ChenBaby">
+          
+            <a 
+              href="https://github.com/ChenBaby"
+              target="_self"
+            >
+              Github
+            </a>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>gulp插件</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2018-12-14
+    </span>
+    
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h3 id="browser-sync自动刷新"><a class="markdownIt-Anchor" href="#browser-sync自动刷新">#</a> browser-sync 自动刷新</h3>
+<p>Browsersync 能让浏览器实时、快速响应您的文件更改（html、js、css、sass、less 等）并自动刷新页面。更重要的是 <strong>Browsersync 可以同时在 PC、平板、手机等设备下进项调试</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var browserSync = require(&#x27;browser-sync&#x27;);</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://browsersync.io/docs/api">browser-sync</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var browserSync = require(&#x27;browser-sync&#x27;).create();</span><br><span class="line">gulp.task(&#x27;browser-sync&#x27;, function () &#123;</span><br><span class="line">    browserSync.init(&#123;</span><br><span class="line">        server:&#123;</span><br><span class="line">            baseDir:&#x27;./&#x27;,  // 设置服务器的根目录</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">gulp.task(&#x27;watch&#x27;, function()&#123;</span><br><span class="line">    gulp.watch(&#x27;src/assets/less/*.less&#x27;, gulp.series(&#x27;concat-css&#x27;, &#x27;browser-sync&#x27;, browserSync.reload));</span><br><span class="line">    gulp.watch(&#x27;src/common/*.js&#x27;, gulp.series(&#x27;concat-js&#x27;, browserSync.reload));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="gulp-babel"><a class="markdownIt-Anchor" href="#gulp-babel">#</a> gulp-babel</h3>
+<p>gulp 打包是不兼容 ES6 的，需要使用 gulp-babel 插件转义后方可打包。</p>
+<p><code>npm install --save-dev gulp-babel babel-preset-es2015 babel-preset-stage-2</code></p>
+<p>其中 babel -preset-es2015 是 ES2015 转码规则，babel-preset-stage-0/1/2/3 是 ES7 不同阶段语法提案的转码规则】（共有 4 个阶段）</p>
+<blockquote>
+<p>Babel 是一个广泛使用的 ES6 转码器，可以将 ES6 代码转为 ES5 代码，从而在现有环境执行。</p>
+</blockquote>
+<h3 id="安装"><a class="markdownIt-Anchor" href="#安装">#</a> 安装</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Babel 7</span><br><span class="line">$ npm install --save-dev gulp-babel @babel/core @babel/preset-env</span><br><span class="line"></span><br><span class="line"># Babel 6</span><br><span class="line">$ npm install --save-dev gulp-babel@7 babel-core babel-preset-env</span><br></pre></td></tr></table></figure>
+<p>安装 babel 系列包，确保只有一个 babel 的版本，不能同时有 6.X 和 7.X 否则会报错</p>
+<p>以及需要新建.babelrc (注意开头有个.) 文件<br>
+.babelrc 的内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;presets&quot;: [&quot;env&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>gulp-babel 插件的用法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const gulp = require(&#x27;gulp&#x27;);</span><br><span class="line">const babel = require(&#x27;gulp-babel&#x27;);</span><br><span class="line"> </span><br><span class="line">gulp.task(&#x27;default&#x27;, () =&gt;</span><br><span class="line">    gulp.src(&#x27;src/app.js&#x27;)</span><br><span class="line">        .pipe(babel())</span><br><span class="line">        .pipe(gulp.dest(&#x27;dist&#x27;))</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h3 id="gulp-less"><a class="markdownIt-Anchor" href="#gulp-less">#</a> gulp-less</h3>
+<p>将 less 预处理为 css</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var less = require(&#x27;gulp-less&#x27;);</span><br><span class="line">var path = require(&#x27;path&#x27;);</span><br><span class="line"> </span><br><span class="line">gulp.task(&#x27;less&#x27;, function () &#123;</span><br><span class="line">  return gulp.src(&#x27;./less/**/*.less&#x27;)</span><br><span class="line">    .pipe(less())</span><br><span class="line">    .pipe(gulp.dest(&#x27;./public/css&#x27;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="gulp-clean-css"><a class="markdownIt-Anchor" href="#gulp-clean-css">#</a> gulp-clean-css</h3>
+<p>css 文件的压缩</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let gulp = require(&#x27;gulp&#x27;);</span><br><span class="line">let cleanCSS = require(&#x27;gulp-clean-css&#x27;);</span><br><span class="line"></span><br><span class="line">gulp.task(&#x27;minify-css&#x27;, () =&gt; &#123;</span><br><span class="line">  return gulp.src(&#x27;styles/*.css&#x27;)</span><br><span class="line">    .pipe(cleanCSS())</span><br><span class="line">    .pipe(gulp.dest(&#x27;dist&#x27;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="gulp-uglify"><a class="markdownIt-Anchor" href="#gulp-uglify">#</a> gulp-uglify</h3>
+<p>压缩 JS 文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&#x27;concat-js&#x27;, function () &#123;</span><br><span class="line">    return gulp.src(&#x27;./src/common/*.js&#x27;)</span><br><span class="line">    .pipe(uglify(&#123;</span><br><span class="line">        mangle: true,               // 是否修改变量名，默认为 true</span><br><span class="line">        compress: true,             // 是否完全压缩，默认为 true</span><br><span class="line">        preserveComments: &#x27;all&#x27;     // 保留所有注释</span><br><span class="line">    &#125;))</span><br><span class="line">    .pipe(gulp.dest(&#x27;./build/js&#x27;))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>gulp-concat<br>
+ 合并文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var concat = require(&#x27;gulp-concat&#x27;);</span><br><span class="line"> </span><br><span class="line">gulp.task(&#x27;scripts&#x27;, function() &#123;</span><br><span class="line">  return gulp.src(&#x27;./lib/*.js&#x27;)</span><br><span class="line">    .pipe(concat(&#x27;all.js&#x27;))</span><br><span class="line">    .pipe(gulp.dest(&#x27;./dist/&#x27;));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(&#x27;concat-css&#x27;, function () &#123;</span><br><span class="line">    return gulp.src(&#x27;./src/assets/less/*.less&#x27;)</span><br><span class="line">    .pipe(less())</span><br><span class="line">    .pipe(cleanCSS())</span><br><span class="line">    .pipe(concat(&#x27;app.css&#x27;))</span><br><span class="line">    .pipe(gulp.dest(&#x27;./build/css/&#x27;))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="gulp-sourcemaps"><a class="markdownIt-Anchor" href="#gulp-sourcemaps">#</a> gulp-sourcemaps</h3>
+<p>处理 JS 时，生成 SourceMap, 解决文件压缩后不利于查看与调试，有了 sourcemap，出错的时候，除错工具将直接显示原始代码，而不是转换后的代码）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&#x27;gulp&#x27;);</span><br><span class="line">var uglify = require(&#x27;gulp-uglify&#x27;);</span><br><span class="line">var concat = require(&#x27;gulp-concat&#x27;);</span><br><span class="line">var minifyCss   = require(&#x27;gulp-clean-css&#x27;),</span><br><span class="line">var sourcemaps = require(&#x27;gulp-sourcemaps&#x27;);</span><br><span class="line"> </span><br><span class="line">gulp.task(&#x27;jsmin&#x27;, function() &#123;</span><br><span class="line">  gulp.src(&#x27;src/**/*.js&#x27;)</span><br><span class="line">    .pipe(sourcemaps.init())</span><br><span class="line">      .pipe(uglify())</span><br><span class="line">      .pipe(concat(&#x27;app.js&#x27;))</span><br><span class="line">    .pipe(sourcemaps.write())</span><br><span class="line">    .pipe(gulp.dest(&#x27;dist/js&#x27;));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(&#x27;cssmin&#x27;, function() &#123;</span><br><span class="line">    gulp.src(&#x27;src/css/*.css&#x27;)</span><br><span class="line">    .pipe(sourcemaps.init())</span><br><span class="line">    .pipe(concat(&#x27;demo.css&#x27;))</span><br><span class="line">    .pipe(minifyCss())</span><br><span class="line">    .pipe(sourcemaps.write())</span><br><span class="line">    .pipe(gulp.dest(&#x27;dist/css&#x27;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>sourceMap.init ( ) 启用 sourcemaps 功能<br>
+ sourceMap.write ( ) 生成记录位置信息的 sourcemaps 文件</p>
+<p>例如上面 jsmin 例子<br>
+经过 concat 和 uglify ，将生成的 app.js 与 源文件 (src 下的所有 js 文件) 之间的位置映射信息，生成 sourcemaps 文件。</p>
+<p>sourceMap.write (path)，将会在指定的 path，生成独立的 sourcemaps 信息文件。如果指定的是相对路径，是相对于 app.js 的路径。</p>
+<p>无法指定路径为 src 目录，否则，sourcemaps 文件会生成在 dist 目录下。</p>
+<p>sourceMap.write ( )，不传参，将会直接在 app.js 尾部，生成 sourcemaps 信息。</p>
+<p><strong>注意</strong>：sourceMap.init () 和 sourceMap.write () 之间使用的插件，必须支持 gulp-sourcemaps 插件</p>
+<p><strong>如何在浏览器中，发挥 sourcemaps 的作用？</strong></p>
+<p>谷歌浏览器中，打开开发者面板，点击右上角的设置。<br>
+<img src="../../images/%E8%B0%B7%E6%AD%8C%E8%AE%BE%E7%BD%AE1.png" alt="chrome设置"></p>
+<p>下面这两个红框的选项，勾选上。<br>
+<img src="../../images/%E8%B0%B7%E6%AD%8C%E8%AE%BE%E7%BD%AE2.png" alt="chrome设置"></p>
+<p>案例中，2.js 中有个 bug，和其它 js 文件合并压缩成 app.js 文件。在一个 html 页面中，只引用这个 app.js。</p>
+<p>在浏览器中，打开这个页面，控制台就会直接显示造成 bug 的源文件，点击即可看到报错位置。</p>
+<p>如果没有显示源文件，就刷新下页面，或者，去浏览器的设置中，将那两个选项勾掉，再勾上。</p>
+<h3 id="gulp-if"><a class="markdownIt-Anchor" href="#gulp-if">#</a> gulp-if</h3>
+<p>条件判断，方便对不同的环境（开发环境、生产环境）对文件进行不同的处理</p>
+<p>gulpif(condition, stream [, elseStream])<br>
+ condition {Boolen} 判断条件或 glob 条件<br>
+ stream condition 为 true 时，执行的任务<br>
+ elseStream condition 为 false 时，执行的任务</p>
+<p>可配合使用以下方式判断简单获取命令行中的参数 gulp taskname –参数名<br>
+ <code>var argv = require('yargs').argv;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&#x27;task&#x27;, function() &#123;</span><br><span class="line">  gulp.src(&#x27;./src/*.js&#x27;)</span><br><span class="line">    .pipe(gulpif(!argv.development, uglify(), beautify()))</span><br><span class="line">    .pipe(gulp.dest(&#x27;./dist/&#x27;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="gulp-imagemin"><a class="markdownIt-Anchor" href="#gulp-imagemin">#</a> gulp-imagemin</h3>
+<p>压缩图片</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&#x27;gulp&#x27;),</span><br><span class="line">    imagemin = require(&#x27;gulp-imagemin&#x27;);</span><br><span class="line"></span><br><span class="line">gulp.task(&#x27;testImagemin&#x27;, function () &#123;</span><br><span class="line">    gulp.src(&#x27;src/img/*.&#123;png,jpg,gif,ico&#125;&#x27;)</span><br><span class="line">        .pipe(imagemin(&#123;</span><br><span class="line">            optimizationLevel: 5, //类型：Number  默认：3  取值范围：0-7（优化等级）</span><br><span class="line">            progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片</span><br><span class="line">            interlaced: true, //类型：Boolean 默认：false 隔行扫描gif进行渲染</span><br><span class="line">            multipass: true //类型：Boolean 默认：false 多次优化svg直到完全优化</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(gulp.dest(&#x27;dist/img&#x27;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+    </div>
+  </div>
+  
+  
+  
+
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/Gulp/">
+              #Gulp
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/articles/2018-12-14-Gulp%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8API/" target="_self">Gulp一些常用API</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/articles/2018-12-14-CSS%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" target="_self">CSS自定义属性</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+   
+
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a target="_blank" rel="noopener" href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+      <a href="https://github.com/ChenBaby" target="_blank">关注我</a>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2018, 5, 7).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

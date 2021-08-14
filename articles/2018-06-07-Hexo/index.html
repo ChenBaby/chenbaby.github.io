@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="董沅鑫, yuanxin.me@gmail.com" />
+  
+  
+  
+  <title>Hexo 搭建博客 | 前端笔记-ChenBaby</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="博客," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">前端笔记</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="https://github.com/ChenBaby">
+          
+            <a 
+              href="https://github.com/ChenBaby"
+              target="_self"
+            >
+              Github
+            </a>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>Hexo 搭建博客</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2018-06-07
+    </span>
+    
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h3 id="简单命令"><a href="#简单命令" class="headerlink" title="简单命令"></a>简单命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo clean <span class="comment">#清除缓存</span></span><br><span class="line">hexo g == hexo generate<span class="comment">#生成静态页面到public目录</span></span><br><span class="line">hexo s == hexo server <span class="comment">#启动服务预览</span></span><br><span class="line">hexo d == hexo deploy<span class="comment">#部署</span></span><br><span class="line">hexo new <span class="string">&quot;postName&quot;</span> <span class="comment">#新建文章</span></span><br><span class="line">hexo new page <span class="string">&quot;pageName&quot;</span> <span class="comment">#新建页面</span></span><br></pre></td></tr></table></figure>
+<h3 id="简单命令-1"><a href="#简单命令-1" class="headerlink" title="简单命令"></a>简单命令</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p><code>npm install -g hexo-cli</code></p>
+<h4 id="初始化hexo"><a href="#初始化hexo" class="headerlink" title="初始化hexo"></a>初始化hexo</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo init blog</span><br><span class="line">hexo install   # 安装依赖包</span><br></pre></td></tr></table></figure>
+<h3 id="本地预览"><a href="#本地预览" class="headerlink" title="本地预览"></a>本地预览</h3><p><code>hexo s # 等同于hexo server，在本地服务器运行</code><br>打开浏览器地址栏输入：<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a> 便可以预览生成的博客框架雏形了。</p>
+<h3 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h3><p>默认是以post作为模板<br><code>hexo new &quot;文章名字&quot;</code><br>该命令会自动新建一个文件“文章名.md”</p>
+<p>或者直接在根目录的source文件夹的_posts文件夹下直接新建一个md文件</p>
+<p>下面是一个标准的文章格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章标题</span><br><span class="line">date: 文章创建日期</span><br><span class="line">categories: 文章分类</span><br><span class="line">tags:</span><br><span class="line">  - 文章标签1</span><br><span class="line">  - 文章标签2</span><br><span class="line">  - ...</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">在&lt;!-- more --&gt;之前编写文章的摘要内容！！！</span><br><span class="line"></span><br><span class="line">&lt;!-- more --&gt;</span><br><span class="line"></span><br><span class="line">在&lt;!-- more --&gt;之后编写文章的正式内容！！！</span><br></pre></td></tr></table></figure>
+<h3 id="生成页面"><a href="#生成页面" class="headerlink" title="生成页面"></a>生成页面</h3><p><code>hexo new page XXX //以page 作为模版,会自动生成里面的index.md</code></p>
+<h4 id="生成标签页面："><a href="#生成标签页面：" class="headerlink" title="生成标签页面："></a>生成标签页面：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
+<p>修改标签归档页面的markdown文件(文件路径：your-blog/source/tags/index.md)的内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: &lt;!-- 自动生成，无需修改 --&gt;</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">categories:</span><br><span class="line">tags:</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>注：type字段的值是<code>tags</code></p>
+<h4 id="生成分类页面："><a href="#生成分类页面：" class="headerlink" title="生成分类页面："></a>生成分类页面：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure>
+<p>修改分类归档页面的markdown文件(文件路径：your-blog/source/categories/index.md)的内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: &lt;!-- 自动生成，无需修改 --&gt;</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">categories:</span><br><span class="line">tags:</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>注：type字段的值是<code>categories</code></p>
+<h3 id="部署到服务器"><a href="#部署到服务器" class="headerlink" title="部署到服务器"></a>部署到服务器</h3><p><code>hexo deploy</code><br>这里主要介绍部署到Github上面</p>
+<p>在github上面先建立仓库，仓库名格式必须为{user_name}.github.io，其中{user_name}必须与你的用户名一样。</p>
+<p>至于我们如何让本地git项目与远程的github建立联系呢？见<a href="https://chenbaby.github.io/articles/2018-12-09-git/">Github仓库部署</a></a><br>完成上面的建立，接下来安装一个部署扩展<br><code>npm install hexo-deployer-git --save</code></p>
+<h4 id="配置-Deployment"><a href="#配置-Deployment" class="headerlink" title="配置 Deployment"></a>配置 Deployment</h4><p>在项目根目录下找到_config.yml文件，找到Deployment</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:ChenBaby/chenbaby.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+<h3 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h3><h4 id="下载主题代码"><a href="#下载主题代码" class="headerlink" title="下载主题代码"></a>下载主题代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd your-blog/</span><br><span class="line">git clone git@github.com:dongyuanxin/theme-bmw.git themes/bmw</span><br></pre></td></tr></table></figure>
+<p>把自己想要替换的主题的git文件包放到themes目录下</p>
+<h4 id="修改HEXO配置文件"><a href="#修改HEXO配置文件" class="headerlink" title="修改HEXO配置文件"></a>修改HEXO配置文件</h4><p>修改hexo的配置文件：your-blog/_config.yml:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Site</span><br><span class="line">title: 您自己的网站标题</span><br><span class="line">subtitle: # 不需要填写</span><br><span class="line">description: 您自己的网站描述</span><br><span class="line">keywords: 您自己的网站关键词</span><br><span class="line">author: 您的姓名</span><br><span class="line">language: zh-Hans</span><br><span class="line">timezone: # 不需要填写</span><br><span class="line">...</span><br><span class="line">theme: bmw</span><br></pre></td></tr></table></figure>
+<h4 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h4><p>theme-bmw 的配置文件：<code>your-blog/themes/bmw/_config.yml</code><br>可以根据自己需要去更改网站其他配置，例如自定义导航栏：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 导航栏头部名称</span><br><span class="line">nav_name: ChenBaby&#x27;s Blog</span><br><span class="line"># 导航栏选项</span><br><span class="line"># blank: 是否在新页面打开，默认 false</span><br><span class="line"># children：开启二级导航栏</span><br><span class="line">nav: </span><br><span class="line">  - </span><br><span class="line">    name: 主页</span><br><span class="line">    path: /</span><br><span class="line">  -</span><br><span class="line">    name: 归档</span><br><span class="line">    path: /archives/</span><br><span class="line">  -</span><br><span class="line">    name: 分类</span><br><span class="line">    path: /categories/</span><br><span class="line">  -</span><br><span class="line">    name: 标签</span><br><span class="line">    path: /tags/</span><br><span class="line">  - </span><br><span class="line">    name: Github</span><br><span class="line">    path: &quot;https://github.com/ChenBaby&quot;</span><br></pre></td></tr></table></figure>
+<p>站点配置文件和主题配置文件名称都是一样的_config.yml，站点配置文件在网站根目录，主题配置文件在根目录下的theme文件的具体theme下的_config.yml。</p>
+<h3 id="使用markdown语法编好文章"><a href="#使用markdown语法编好文章" class="headerlink" title="使用markdown语法编好文章"></a>使用markdown语法编好文章</h3><p>依据markdown语法编好文章，以及部署本地文件到github后，那么就可以使用命令：<code>hexo g -d</code>同步到github</p>
+<p>然后使用<a target="_blank" rel="noopener" href="https://chenbaby.github.io进行访问/">https://chenbaby.github.io进行访问</a></p>
+    </div>
+  </div>
+  
+  
+  
+
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E5%8D%9A%E5%AE%A2/">
+              #博客
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/articles/2018-08-06-VSCode%E5%90%8C%E6%AD%A5%E8%AE%BE%E7%BD%AE%E5%8F%8A%E6%89%A9%E5%B1%95%E6%8F%92%E4%BB%B6/" target="_self">VSCode同步设置及扩展插件</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+   
+
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a target="_blank" rel="noopener" href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+      <a href="https://github.com/ChenBaby" target="_blank">关注我</a>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2018, 5, 7).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>
